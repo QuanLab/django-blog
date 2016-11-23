@@ -1,0 +1,32 @@
+{% load get_category %}
+{% load static %}
+
+<div class="content-box col-md-8">
+    {% if all_post %}
+    {% for post in all_post %}
+    <div class="last-post">
+        <div class="col-md-4 featured-thumnail">
+            <a href="#">
+                <img src= {% static '/images/thumbnails/' %}{{ post.image_thumbnail }}>
+            </a>
+        </div>
+        <div class="content-post col-md-8">
+            <a href="{% url 'post_details' category_slug=post.get_categories_slug  post_slug=post.slug %}">
+                <h2 class="title">{{ post.title }}</h2>
+            </a>
+            <p>
+                {% autoescape off %}
+                    {{  post.content|truncatewords_html:34 |striptags}}
+                {% endautoescape %}
+            </p>
+            <div class="author-created">
+                Author:
+                <span class="author">Quan Pham</span>
+                | Last Updated:
+                <span class="created">Oct 07, 2016</span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>

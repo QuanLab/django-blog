@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 from django.contrib.auth.models import User
-from ckeditor.fields import RichTextField
+# from ckeditor.fields import RichTextField
 
 
 class Page (models.Model):
@@ -39,8 +40,8 @@ class Author(User):
 class Post(models.Model):
     title = models.CharField(max_length=255)
     slug = models.CharField(unique=True, max_length=255)
-    content = RichTextField()
-    image_thumbnail = models.ImageField(blank=True, max_length=255)
+    content = RichTextUploadingField()
+    image_thumbnail = models.ImageField(blank=True, upload_to='images/thumbnails/')
     description = models.TextField()
     keyword = models.CharField(blank=True, max_length=255)
     description = models.TextField(blank=True, max_length=255)

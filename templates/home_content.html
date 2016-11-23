@@ -16,7 +16,7 @@
             </a>
             <p>
                 {% autoescape off %}
-                    {{  post.content|truncatewords_html:34 |striptags}}
+                    {{ post.content|truncatewords_html:34|striptags }}
                 {% endautoescape %}
             </p>
             <div class="author-created">

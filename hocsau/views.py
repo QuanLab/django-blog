@@ -5,9 +5,13 @@ from . models import Category, Post
 from myblog import settings
 
 
-def get_all_categories():
-    return Category.objects.all()
-
+def get_context_custom():
+    context = {
+        'menu_item':Category.objects.all(),
+        'featured_post':Post.objects.all().order_by('?')[:5],
+        'title': settings.PAGE_TITLE
+    }
+    return context
 
 class MyFormView(View):
 
@@ -15,8 +19,11 @@ class MyFormView(View):
 
     def get(self, request, *args, **kwargs):
         all_post = Post.objects.all()
-        return render(request, self.template_name,
-                      {'all_post': all_post, 'menu_item': get_all_categories(), 'title': settings.PAGE_TITLE})
+        context = get_context_custom()
+        context.update({
+            'all_post':all_post
+        })
+        return render(request, self.template_name, context)
 
 
 class CategoryView (View):
@@ -24,9 +31,12 @@ class CategoryView (View):
     template_name = 'index.html'
 
     def get(self, request, category_slug):
-        all_post = get_object_or_404(Category, slug=category_slug).post_set.all();
-        return render(request, self.template_name,
-                      {'all_post': all_post, 'menu_item': get_all_categories(), 'title':settings.PAGE_TITLE})
+        all_post = get_object_or_404(Category, slug=category_slug).post_set.all()
+        context = get_context_custom()
+        context.update({
+            'all_post': all_post
+        })
+        return render(request, self.template_name, context)
 
 
 class PostDetails (View):
@@ -35,5 +45,8 @@ class PostDetails (View):
 
     def get(self, request, category_slug=None, post_slug=None):
         post = get_object_or_404(Post, slug=post_slug)
-        return render(request, self.template_name,
-                      {'post': post, 'menu_item': get_all_categories(), 'title': settings.PAGE_TITLE})
+        context = get_context_custom()
+        context.update({
+            'post': post
+        })
+        return render(request, self.template_name, context)

@@ -1,32 +1,25 @@
 {% load static %}
+
 <div class="col-md-4 site-bar">
     <div class="widget-site-bar">
         <h3 class="title-widget-post">Featured post</h3>
         <ul class="category-posts">
-            <li class="post-box">
-                <div class="horizontal-container-inner">
-                    <div class="post-image col-md-4">
-                        <a href="" title="Title featured post">
-                            <img src={% static "images/thumbnails/featured_image.png" %}>
-                        </a>
+            {% for post in featured_post %}
+                <li class="post-box">
+                    <div class="horizontal-container-inner">
+                        <div class="post-image col-md-4">
+                            <a href="{% url 'post_details' category_slug=post.get_categories_slug  post_slug=post.slug %}"
+                               title="Title featured post">
+                                <img src="{% get_media_prefix %}{{ post.image_thumbnail }}">
+                            </a>
+                        </div>
+                        <div class="post-data">
+                            <a href="{% url 'post_details' category_slug=post.get_categories_slug  post_slug=post.slug %}">
+                                {{ post.title }}</a>
+                        </div>
                     </div>
-                    <div class="post-data">
-                        <a href="">SiteGround Review – Blazing WordPress Hosting at Under 300ms</a>
-                    </div>
-                </div>
-            </li></br>
-            <li class="post-box">
-                <div class="horizontal-container-inner">
-                    <div class="post-image col-md-4">
-                        <a href="" title="Title featured post">
-                            <img src={% static "images/thumbnails/featured_image.png" %}>
-                        </a>
-                    </div>
-                    <div class="post-data">
-                        <a href="">SiteGround Review – Blazing WordPress Hosting at Under 300ms</a>
-                    </div>
-                </div>
-            </li>
+                </li>
+            {% endfor %}
         </ul>
     </div>
 </div>

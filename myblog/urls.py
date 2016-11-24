@@ -22,6 +22,7 @@ from . import settings
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^hocsau/', include("hocsau.urls")),
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 if settings.DEBUG:

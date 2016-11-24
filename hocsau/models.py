@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 from django.contrib.auth.models import User
-# from ckeditor.fields import RichTextField
 
 
 class Page (models.Model):
@@ -21,7 +20,8 @@ class Category (models.Model):
     slug = models.CharField(unique=True, max_length=255)
     parent_category = models.CharField(max_length=255, blank=True)
     menu_index = models.IntegerField(default=0)
-    hasChild= models.BooleanField(default=False)
+    url_base = models.CharField(blank=True, max_length=255)
+    numberChild = models.IntegerField(default=0)
 
     class Meta:
         verbose_name_plural='Categories'
@@ -30,9 +30,31 @@ class Category (models.Model):
     def __unicode__(self):
         return self.name
 
+    def save(self):
+        if not self.parent_category is None:
+            try:
+                parent_category = Category.objects.get(slug=self.parent_category)
+                parent_category.numberChild = parent_category.numberChild + 1
+                parent_category.save()
+                self.url_base = self.parent_category + "/" + self.slug
+            except:
+                self.url_base = self.slug
+        super(Category, self).save()
+
+    def delete(self):
+        if not self.parent_category is None:
+            try:
+                parent_category = Category.objects.get(slug=self.parent_category)
+                parent_category.numberChild = parent_category.numberChild - 1
+                parent_category.save()
+            except:
+                pass
+        super(Category, self).delete()
+
 
 class Author(User):
     show_name = models.CharField(blank=True, max_length=255)
+
     class Meta:
         verbose_name_plural='Author'
 

@@ -6,12 +6,15 @@ from myblog import settings
 
 
 def get_context_custom():
+
     context = {
-        'menu_item':Category.objects.all(),
+        'menu':Category.objects.all().filter(parent_category=""),
+        'sub_menu': Category.objects.all().filter(numberChild=0),
         'featured_post':Post.objects.all().order_by('?')[:5],
         'title': settings.PAGE_TITLE
     }
     return context
+
 
 class MyFormView(View):
 
@@ -31,12 +34,15 @@ class CategoryView (View):
     template_name = 'index.html'
 
     def get(self, request, category_slug):
-        all_post = get_object_or_404(Category, slug=category_slug).post_set.all()
         context = get_context_custom()
-        context.update({
-            'all_post': all_post
-        })
-        return render(request, self.template_name, context)
+        try:
+            all_post = get_object_or_404(Category, slug=category_slug).post_set.all()
+            context.update({
+                'all_post': all_post
+            })
+            return render(request, self.template_name, context)
+        except:
+            return render(request, self.template_name, context)
 
 
 class PostDetails (View):

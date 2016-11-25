@@ -6,7 +6,6 @@ from myblog import settings
 
 
 def get_context_custom():
-
     context = {
         'menu':Category.objects.all().filter(parent_category=""),
         'sub_menu': Category.objects.all().filter(numberChild=0),
@@ -36,7 +35,7 @@ class CategoryView (View):
     def get(self, request, category_slug):
         context = get_context_custom()
         try:
-            all_post = get_object_or_404(Category, slug=category_slug).post_set.all()
+            all_post = get_object_or_404(Category, url_base=category_slug).post_set.all()
             context.update({
                 'all_post': all_post
             })

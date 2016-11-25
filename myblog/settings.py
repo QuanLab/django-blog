@@ -133,10 +133,12 @@ STATICFILES_DIRS = [
 
 'SET storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci'
 
-PAGE_TITLE = "Học sâu"
-
 CKEDITOR_IMAGE_BACKEND = "pillow"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
 CKEDITOR_UPLOAD_PATH = 'uploads/'
+
+#general setting for page
+PAGE_TITLE = "Học sâu"
+NUMBER_POST_PER_PAGINATOR=2

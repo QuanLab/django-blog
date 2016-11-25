@@ -118,3 +118,4 @@ class Post(models.Model):
 
     def get_categories_slug (self):
         return self.categories.all().first().url_base
+

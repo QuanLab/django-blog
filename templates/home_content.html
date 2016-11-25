@@ -2,8 +2,8 @@
 {% load static %}
 
 <div class="content-box col-md-8">
-    {% if all_post %}
-    {% for post in all_post %}
+    {% if posts %}
+    {% for post in posts %}
     <div class="last-post">
         <div class="col-md-4 featured-thumnail">
             <a href="{% url 'post_details' category_slug=post.get_categories_slug  post_slug=post.slug %}">

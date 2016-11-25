@@ -1,3 +1,5 @@
 .idea/
 *.pyc
 hocsau/migrations
+media/images/thumbnails
+

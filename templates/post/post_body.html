@@ -1,7 +1,7 @@
 {% load static %}
 <div class="content-box col-md-8">
     {% if post %}
-        <div class="last-post">
+        <div class="single-post">
             <a href="#">
                 <h2 class="title">{{ post.title }}</h2>
             </a>
@@ -10,12 +10,23 @@
                     {{ post.content }}
                 {% endautoescape %}
             </p>
-            <div class="author-created">
-                Author:
-                <span class="author">Quan Pham</span>
-                | Last Updated:
-                <span class="created">Oct 07, 2016</span>
-            </div>
         </div>
     {% endif %}
+
+    <div class="related-post">
+        <h3>Related Post</h3>
+        {% if featured_post %}
+            {% for item in featured_post %}
+            <div class="related-item col-md-4">
+                <div class="image"><img src="{% get_media_prefix %}{{ item.image_thumbnail }}"></div>
+                <div class="title"><a href="#">{{ item.title }}</a></div>
+            </div>
+            {% endfor %}
+
+        {% endif %}
+    </div>
+
+    <div class="conversation">
+        {% include 'comment/disqus.html' %}
+    </div>
 </div>

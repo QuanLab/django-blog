@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/hocsau">Ecommerce Store</a>
+            <a class="navbar-brand" href="/hocsau">Plain Python</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -17,7 +17,7 @@
                 {% if menu %}
                     {% for item in menu %}
                         {% ifequal item.numberChild 0 %}
-                            <li><a href="{% url 'category' category_slug=item.slug %}">{{ item.name }}</a></li>
+                            <li><a href="{% url 'category' category=item.slug %}">{{ item.name }}</a></li>
                         {% else %}
                             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"
                                                     role="button" aria-haspopup="true"
@@ -26,7 +26,7 @@
                                     {% for sub in sub_menu %}
                                         {% ifequal sub.parent_category item.slug %}
                                             <li>
-                                                <a href="{% url 'category' category_slug=sub.url_base %}">
+                                                <a href="{% url 'sub_category' category=item.slug sub_category=sub.slug %}">
                                                     {{ sub.name }}
                                                 </a>
                                             </li>

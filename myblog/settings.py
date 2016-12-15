@@ -140,5 +140,5 @@ MEDIA_URL = '/media/'
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 
 #general setting for page
-PAGE_TITLE = "Học sâu"
-NUMBER_POST_PER_PAGINATOR=2
+PAGE_TITLE = "Python tutorials | Learning python by example and real project."
+NUMBER_POST_PER_PAGINATOR=10

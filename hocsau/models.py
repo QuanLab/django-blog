@@ -102,16 +102,15 @@ class Post(models.Model):
     meta_description = models.CharField(blank=True, max_length=255)
     published_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
-    categories = models.ManyToManyField(Category)
-    author = models.ManyToManyField(Author, blank=True)
+    categories = models.ForeignKey(Category)
+    author = models.ForeignKey(Author, blank=True)
 
     def __unicode__(self):
         return unicode(self.title)
 
-
     def save(self, *args, **kwargs):
         if self.slug == "":
-            self.slug = vi_slug(self.name)
+            self.slug = vi_slug(self.title)
         else:
             self.slug = vi_slug(self.slug)
         super(Post, self).save(*args, **kwargs)

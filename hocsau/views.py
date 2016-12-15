@@ -42,10 +42,13 @@ class Index(View):
 class CategoryView(View):
     template_name = 'index.html'
 
-    def get(self, request, category_slug):
+    def get(self, request, category=None, sub_category=None):
+        if sub_category:
+            post_list = get_object_or_404(Category, slug=sub_category).post_set.all()
+        else:
+            post_list = get_object_or_404(Category, slug=category).post_set.all()
         context = get_context_custom()
         try:
-            post_list = get_object_or_404(Category, url_base=category_slug).post_set.all()
             page = request.GET.get('page', 1)
             paginator = Paginator(post_list, settings.NUMBER_POST_PER_PAGINATOR)
 
@@ -60,21 +63,22 @@ class CategoryView(View):
             context.update({
                 'posts': posts
             })
-            context.update({
-                'posts': posts
-            })
             return render(request, self.template_name, context)
         except:
             return render(request, self.template_name, context)
 
 
-class PostDetails(View):
+class PostDetail(View):
     template_name = 'post/post_detail.html'
 
-    def get(self, request, category_slug=None, post_slug=None):
+    def get(self, request, year=None, month=None, post_slug=None):
         post = get_object_or_404(Post, slug=post_slug)
+        related_post= Post.objects.all().order_by('?')[:5]
+        identifier =request.path
         context = get_context_custom()
         context.update({
+            'disqus_identifier': identifier,
+            'related_post':related_post,
             'post': post
         })
         return render(request, self.template_name, context)

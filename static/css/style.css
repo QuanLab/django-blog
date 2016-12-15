@@ -195,6 +195,6 @@ img, video, object {
     font-size: 17px;
 }
 
-.related-post .related-item .image {
-
+.related-post > h3 {
+    margin-left: 10px;
 }

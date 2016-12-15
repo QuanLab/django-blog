@@ -2,6 +2,7 @@
 from django.views import View
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Q
 
 from .models import Category, Post
 from myblog import settings
@@ -73,12 +74,17 @@ class PostDetail(View):
 
     def get(self, request, year=None, month=None, post_slug=None):
         post = get_object_or_404(Post, slug=post_slug)
-        related_post= Post.objects.all().order_by('?')[:5]
-        identifier =request.path
+        related_post=get_related_post(post_slug)
+        print related_post
         context = get_context_custom()
         context.update({
-            'disqus_identifier': identifier,
+            'disqus_identifier': request.path,
             'related_post':related_post,
             'post': post
         })
         return render(request, self.template_name, context)
+
+
+def get_related_post(post_slug):
+    category= get_object_or_404(Post, slug= post_slug).categories.slug
+    return Post.objects.all().filter(categories__slug=category).filter(~Q(slug=post_slug)).order_by('?')[:3]

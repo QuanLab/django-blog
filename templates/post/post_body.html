@@ -15,8 +15,8 @@
 
     <div class="related-post">
         <h3>Related Post</h3>
-        {% if featured_post %}
-            {% for item in featured_post %}
+        {% if related_post %}
+            {% for item in related_post %}
             <div class="related-item col-md-4">
                 <div class="image"><img src="{% get_media_prefix %}{{ item.image_thumbnail }}"></div>
                 <div class="title"><a href="#">{{ item.title }}</a></div>

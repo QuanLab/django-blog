@@ -115,6 +115,3 @@ class Post(models.Model):
             self.slug = vi_slug(self.slug)
         super(Post, self).save(*args, **kwargs)
 
-    def get_categories_slug (self):
-        return self.categories.all().first().url_base
-

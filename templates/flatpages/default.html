@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content-wraper %}
+    {% load static %}
+    <div class="content-box col-md-8">
+        <div class="single-post">
+            <a href="#">
+                <h2 class="title">{{ flatpage.title }}</h2>
+            </a>
+            <p>
+                {{ flatpage.content }}
+            </p>
+        </div>
+    </div>
+{% endblock %}

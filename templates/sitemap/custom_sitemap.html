@@ -1,0 +1,12 @@
+{% spaceless %}
+    {% for url in urlset %}
+
+        {{ url.location }}
+        {% if url.lastmod %}{{ url.lastmod|date:"Y-m-d" }}{% endif %}
+        {% if url.changefreq %}{{ url.changefreq }}{% endif %}
+        {% if url.priority %}{{ url.priority }}{% endif %}
+        {% if url.item.publication_date %}{{ url.item.publication_date|date:"Y-m-d" }}{{% endif %}
+        {% if url.item.tags %}{{ url.item.tags }}{% endif %}
+
+    {% endfor %}
+{% endspaceless %}

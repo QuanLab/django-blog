@@ -31,22 +31,14 @@ def vi_slug(data):
     return slug
 
 
-class Page (models.Model):
-    name = models.CharField(max_length=255)
-    slug = models.CharField(unique=True, blank=True, max_length=255)
-    content = models.TextField(blank=True)
-
-    def __unicode__(self):
-        return self.name
-
-
 class Category (models.Model):
+
     name = models.CharField(max_length=255)
     slug = models.CharField(unique=True, blank=True, max_length=255)
-    parent_category = models.CharField(max_length=255, blank=True)
+    parent_category = models.ForeignKey("Category", blank=True, null=True)
+    description=models.CharField(blank=True, max_length=255)
     menu_index = models.IntegerField(default=0)
-    url_base = models.CharField(blank=True, max_length=255)
-    numberChild = models.IntegerField(default=0)
+    num_child = models.IntegerField(default=0)
 
     class Meta:
         verbose_name_plural='Categories'
@@ -55,10 +47,11 @@ class Category (models.Model):
     def __unicode__(self):
         return self.name
 
+
     def save(self, *args, **kwargs):
         if not self.parent_category is None:
             try:
-                parent_category = Category.objects.get(slug=self.parent_category)
+                parent_category = Category.objects.get(slug=self.parent_category.slug)
                 parent_category.numberChild += 1
                 parent_category.save()
 
@@ -66,9 +59,8 @@ class Category (models.Model):
                     self.slug = vi_slug(self.name)
                 else:
                     self.slug = vi_slug(self.slug)
-                self.url_base = self.parent_category + "/" + self.slug
             except:
-                self.url_base = self.slug
+                pass
         super(Category, self).save()
 
     def delete(self):
@@ -114,4 +106,16 @@ class Post(models.Model):
         else:
             self.slug = vi_slug(self.slug)
         super(Post, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return '/hocsau/' + str(self.modified_date.year) + '/' + str(self.modified_date.month) +'/' + self.slug
+
+
+class Setting(models.Model):
+    site_name = models.CharField(max_length=255, blank=True)
+    title =models.CharField(max_length=255, blank=True)
+    meta_description = models.TextField(max_length=1000, blank=True)
+    number_of_post_per_pagination = models.IntegerField(default=10)
+    number_of_featured_post = models.IntegerField(default=3)
+    favicon = models.ImageField(blank=True, upload_to='images/favicon/')
 

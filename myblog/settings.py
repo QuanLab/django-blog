@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
     'ckeditor',
     'hocsau',
 ]
@@ -121,7 +124,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
@@ -142,3 +144,5 @@ CKEDITOR_UPLOAD_PATH = 'uploads/'
 #general setting for page
 PAGE_TITLE = "Python tutorials | Learning python by example and real project."
 NUMBER_POST_PER_PAGINATOR=10
+
+SITE_ID=1

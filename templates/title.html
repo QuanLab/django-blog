@@ -1,0 +1,22 @@
+{% load static %}
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ site_setting.title }}</title>
+<meta name="description" content="{{ site_setting.description }}"/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="{{ site_setting.site_url }}" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="{{ site_setting.title }}" />
+<meta property="og:description" content="{{ site_setting.description }}" />
+<meta property="og:url" content="{{ site_setting.site_url }}" />
+<meta property="og:site_name" content="{{ site_setting.site_name }}" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="{{ site_setting.description }}" />
+<meta name="twitter:title" content="{{ site_setting.title }}" />
+
+<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+<link href="{% static "css/style.css" %}" rel="stylesheet">
+<link rel="shortcut icon" type="image/png" href="{% get_media_prefix %}{{ site_setting.favicon }}"/>

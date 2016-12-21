@@ -16,7 +16,7 @@
             <ul class="nav navbar-nav">
                 {% if menu %}
                     {% for item in menu %}
-                        {% ifequal item.numberChild 0 %}
+                        {% ifequal item.num_child 0 %}
                             <li><a href="{% url 'category' category=item.slug %}">{{ item.name }}</a></li>
                         {% else %}
                             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"
@@ -24,7 +24,7 @@
                                                     aria-expanded="false">{{ item.name }}<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     {% for sub in sub_menu %}
-                                        {% ifequal sub.parent_category item.slug %}
+                                        {% ifequal sub.parent_category.slug item.slug %}
                                             <li>
                                                 <a href="{% url 'sub_category' category=item.slug sub_category=sub.slug %}">
                                                     {{ sub.name }}

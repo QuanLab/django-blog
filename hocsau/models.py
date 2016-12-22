@@ -47,13 +47,12 @@ class Category (models.Model):
     def __unicode__(self):
         return self.name
 
-
     def save(self, *args, **kwargs):
         if not self.parent_category is None:
             try:
-                parent_category = Category.objects.get(slug=self.parent_category.slug)
-                parent_category.numberChild += 1
-                parent_category.save()
+                self.parent_category.num_child = Category.objects.all()\
+                    .filter(parent_category=self.parent_category).count()
+                self.parent_category.save()
 
                 if self.slug == "":
                     self.slug = vi_slug(self.name)
@@ -66,13 +65,12 @@ class Category (models.Model):
     def delete(self):
         if not self.parent_category is None:
             try:
-                parent_category = Category.objects.get(slug=self.parent_category)
-                parent_category.numberChild-=1
-                parent_category.save()
+                self.parent_category.num_child = Category.objects.all()\
+                    .filter(parent_category=self.parent_category).count()
+                self.parent_category.save()
             except:
                 pass
         super(Category, self).delete()
-
 
 class Author(User):
     show_name = models.CharField(blank=True, max_length=255)
@@ -114,7 +112,7 @@ class Post(models.Model):
 class Setting(models.Model):
     site_name = models.CharField(max_length=255, blank=True)
     title =models.CharField(max_length=255, blank=True)
-    meta_description = models.TextField(max_length=1000, blank=True)
+    description = models.TextField(max_length=1000, blank=True)
     number_of_post_per_pagination = models.IntegerField(default=10)
     number_of_featured_post = models.IntegerField(default=3)
     favicon = models.ImageField(blank=True, upload_to='images/favicon/')
